@@ -1,4 +1,5 @@
 import 'package:expense_tracker/model/expense_item.dart';
+import 'package:expense_tracker/widgets/expense_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class Expense extends StatefulWidget {
@@ -58,13 +59,54 @@ class _ExpenseState extends State<Expense> {
           ],
           backgroundColor: Colors.teal,
         ),
-      body: const Column(
-        children: [
-          Text('Chart'),
-          Text('List of Expenses'),
-        ],
+        body: Column(
+          children: [
+            // Chart placeholder
+            Container(
+              height: 200,
+              margin: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Center(
+                child: Text(
+                  'Chart Coming Soon',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+            // Expenses List Header
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  Text(
+                    'Recent Expenses',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Expenses List
+            Expanded(
+              child: ListView.builder(
+                itemCount: expenseItem.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ExpenseItemWidget(item: expenseItem[index]);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
-    )
     );
   }
 }
