@@ -1,4 +1,5 @@
 import 'package:expense_tracker/model/expense_item.dart';
+import 'package:expense_tracker/new_expense.dart';
 import 'package:expense_tracker/widgets/expense_item_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,16 @@ class Expense extends StatefulWidget {
 }
 
 class _ExpenseState extends State<Expense> {
+
+  void showAddExpense() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => NewExpense()
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -40,20 +51,19 @@ class _ExpenseState extends State<Expense> {
       ),
     ];
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Expense Tracker', 
-            style: TextStyle(
-              fontWeight: FontWeight.bold, 
-              color: Colors.white
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Expense Tracker', 
+          style: TextStyle(
+            fontWeight: FontWeight.bold, 
+            color: Colors.white
           ),
+        ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add, color: Colors.white),
               onPressed: () {
-                // Add your onPressed code here!
+                showAddExpense();
               },
             )
           ],
@@ -106,7 +116,6 @@ class _ExpenseState extends State<Expense> {
             ),
           ],
         ),
-      ),
     );
   }
 }
