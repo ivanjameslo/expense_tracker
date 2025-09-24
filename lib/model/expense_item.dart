@@ -26,3 +26,21 @@ class ExpenseItem {
     return categoryIcons[category] ?? Icons.help;
   }
 }
+
+class ExpenseBucket {
+  final Category category;
+  final List<ExpenseItem> expenses;
+
+  ExpenseBucket(this.category, this.expenses);
+
+  ExpenseBucket.forCategory(List<ExpenseItem> allExpenses, Category category)
+      : this(category, allExpenses.where((expense) => expense.category == category).toList());
+
+  double get totalExpenses {
+    double sum = 0;
+    for (final expense in expenses) {
+      sum += expense.amount;
+    }
+    return sum;
+  }
+}

@@ -2,7 +2,9 @@ import 'package:expense_tracker/model/expense_item.dart';
 import 'package:flutter/material.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(ExpenseItem expense) onAddExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -10,7 +12,7 @@ class NewExpense extends StatefulWidget {
 
 class _NewExpenseState extends State<NewExpense> {
   final _titleEditingController = TextEditingController();
-  final _amountController = TextEditingController();
+  final _amountEditingController = TextEditingController();
   DateTime? _selectedDate;
   Category _selectedCategory = Category.food;
 
@@ -29,7 +31,7 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   void _submitExpenseData() {
-    final enteredAmount = double.tryParse(_amountController.text);
+    final enteredAmount = double.tryParse(_amountEditingController.text);
     final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
     
     if (_titleEditingController.text.trim().isEmpty ||
@@ -61,14 +63,14 @@ class _NewExpenseState extends State<NewExpense> {
       category: _selectedCategory,
     );
 
-    // TODO: Add the expense to the list
-    Navigator.pop(context, newExpense);
+    widget.onAddExpense(newExpense);
+    Navigator.pop(context);
   }
 
   @override
   void dispose() {
     _titleEditingController.dispose();
-    _amountController.dispose();
+    _amountEditingController.dispose();
     super.dispose();
   }
 
@@ -77,7 +79,7 @@ class _NewExpenseState extends State<NewExpense> {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
     final screenHeight = MediaQuery.of(context).size.height;
     
-    return Container(
+    return SizedBox(
       height: screenHeight * 0.5 + keyboardSpace,
       child: SingleChildScrollView(
         child: Padding(
@@ -124,7 +126,7 @@ class _NewExpenseState extends State<NewExpense> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: _amountController,
+                      controller: _amountEditingController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         prefixText: '\$ ',
