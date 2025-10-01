@@ -1,8 +1,10 @@
 import 'package:expense_tracker/model/expense_item.dart';
 import 'package:flutter/material.dart';
 
-class ExpensesChart extends StatelessWidget {
-  const ExpensesChart({super.key, required this.expenses});
+import 'package:expense_tracker/widgets/chart/chart_bar.dart';
+
+class Chart extends StatelessWidget {
+  const Chart({super.key, required this.expenses});
 
   final List<ExpenseItem> expenses;
 
@@ -43,8 +45,8 @@ class ExpensesChart extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
           colors: [
-            Colors.teal.withOpacity(0.3),
-            Colors.tealAccent.withOpacity(0.0)
+            Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            Theme.of(context).colorScheme.primary.withOpacity(0.0)
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
@@ -75,8 +77,11 @@ class ExpensesChart extends StatelessWidget {
                       child: Icon(
                         categoryIcons[bucket.category],
                         color: isDarkMode
-                            ? Colors.tealAccent.withOpacity(0.9)
-                            : Colors.teal.withOpacity(0.7),
+                            ? Theme.of(context).colorScheme.secondary
+                            : Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.7),
                       ),
                     ),
                   ),
@@ -84,39 +89,6 @@ class ExpensesChart extends StatelessWidget {
                 .toList(),
           )
         ],
-      ),
-    );
-  }
-}
-
-class ChartBar extends StatelessWidget {
-  const ChartBar({
-    super.key,
-    required this.fill,
-  });
-
-  final double fill;
-
-  @override
-  Widget build(BuildContext context) {
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: FractionallySizedBox(
-          heightFactor: fill,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(8)),
-              color: isDarkMode
-                  ? Colors.teal.withOpacity(0.8)
-                  : Colors.teal.withOpacity(0.65),
-            ),
-          ),
-        ),
       ),
     );
   }

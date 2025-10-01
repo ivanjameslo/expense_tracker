@@ -1,7 +1,7 @@
 import 'package:expense_tracker/model/expense_item.dart';
 import 'package:expense_tracker/new_expense.dart';
 import 'package:expense_tracker/widgets/expense_item_widget.dart';
-import 'package:expense_tracker/widgets/expenses_chart.dart';
+import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:flutter/material.dart';
 
 class Expense extends StatefulWidget {
@@ -14,7 +14,7 @@ class Expense extends StatefulWidget {
 class _ExpenseState extends State<Expense> {
   final List<ExpenseItem> _registeredExpenses = [
     ExpenseItem(
-      title: 'Lunch',
+      title: 'Lunch',  
       amount: 15.99,
       category: Category.food,
       date: DateTime.now().subtract(const Duration(days: 1)), // Yesterday
@@ -100,7 +100,7 @@ class _ExpenseState extends State<Expense> {
         body: Column(
           children: [
             // Expenses Chart
-            ExpensesChart(expenses: _registeredExpenses),
+            Chart(expenses: _registeredExpenses),
             // Expenses List Header
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
